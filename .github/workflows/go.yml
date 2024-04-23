@@ -25,6 +25,7 @@ jobs:
       run: docker-compose build
 
   test:
+    needs: db
     runs-on: ubuntu-latest
     strategy:
       matrix:
