@@ -8,18 +8,7 @@ on:
 
 jobs: 
 
-  db:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build-DB
-      run: docker-compose build
-      
-    - name: Create-DB
-      run: docker-compose up -d
-
   test:
-    needs: db
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,6 +21,12 @@ jobs:
       with:
         go-version: ${{ matrix.go_version }}
       
+    - name: Build-DB
+      run: docker-compose build
+      
+    - name: Create-DB
+      run: docker-compose up -d
+
     - name: Test
       run: go test -v main_test.go 
       
